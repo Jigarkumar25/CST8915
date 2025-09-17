@@ -22,3 +22,14 @@ To ensure reliable, decoupled processing it uses RabbitMQ as a message broker: a
 The Product Service manages product data names, descriptions, prices, and inventory levels, and exposes APIs for consumers to read or update that data. It is written in Rust for performance and memory-safety, making it suitable for a service responsible for consistent product lookups and stock operations.
 
 The Store Front queries this service to display product listings (GET /products, GET /products/:id). Inventory can be checked synchronously by the Order Service during order validation, or the Product Service can be updated asynchronously (depending on implementation) when order messages are processed. The Product Service typically listens on a service port such as 3030.
+
+## Conclusion
+
+In a simple way the flow is:
+- Customer uses the Store Front  
+- Store Front calls Product Service for product data  
+- Store Front calls Order Service to place orders  
+- Order Service passes orders into RabbitMQ  
+- RabbitMQ ensures reliable order delivery to processing systems
+
+
